@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +20,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index');
+
+
+Route::resource('qrcodes', 'QrcodeController');
+
+Route::resource('users', 'UserController');
+
+Route::resource('transactions', 'TransactionController');
+
+Route::resource('roles', 'RoleController');
