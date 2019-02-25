@@ -41,9 +41,15 @@
 </div>
 
 <!-- Qrcode Path Field -->
-<div class="form-group">
+<!-- <div class="form-group">
     {!! Form::label('qrcode_path', 'Qrcode Path:') !!}
     <p>{!! $qrcode->qrcode_path !!}</p>
+</div> -->
+
+<!-- Qrcode image -->
+<div class="form-group">
+{!! Form::label('qrcode_path', 'QRCode:') !!}
+    <p><img src="{{ asset($qrcode->qrcode_path) }}" size="400px"></p>
 </div>
 
 <!-- Amount Field -->
@@ -69,4 +75,3 @@
     {!! Form::label('updated_at', 'Updated At:') !!}
     <p>{!! $qrcode->updated_at !!}</p>
 </div>
-

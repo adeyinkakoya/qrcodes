@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Flash;
 use Response;
-use App\Models\Qrcode as QrcodeModel;
 use Illuminate\Http\Request;
-use LaravelQRCode\Facades\QRCode;
+//use LaravelQRCode\Facades\QRCode;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Qrcode as QrcodeModel;
 use App\Repositories\QrcodeRepository;
 use App\Http\Requests\CreateQrcodeRequest;
 use App\Http\Requests\UpdateQrcodeRequest;
 use App\Http\Controllers\AppBaseController;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Prettus\Repository\Criteria\RequestCriteria;
 
 class QrcodeController extends AppBaseController
@@ -65,14 +66,12 @@ class QrcodeController extends AppBaseController
         $qrcode = $this->qrcodeRepository->create($input);
 
         // create the qrcode file-img path, use the qrcodes table autoincrement field to make each file name unique.
-        $file = 'myqrcodes/'.$qrcode->id.'.png';
+        $file = 'generated_qrcodes/'.$qrcode->id.'.png';
 
         // Call the Qrcode generator package. Dont forget to import the class namespace
-       $newQrcode=QRCode::text('message')
-       ->setSize(4)
-       ->setMargin(2)
-       ->setOutfile($file)
-       ->png();
+
+        $newQrcode=QrCode::format('png')->size(400)->generate('Make me into a QrCode!', $file);
+       //$newQrcode=QRCode::text('message')->setSize(4)->setMargin(2)->setOutfile($file)->png();
        
        //Update the received data array with the qrcode path, if the new Qr code has been generated and saved to the file path 
        $input['qrcode_path']=$file;
