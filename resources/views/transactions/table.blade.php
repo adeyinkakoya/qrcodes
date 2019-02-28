@@ -1,9 +1,9 @@
 <table class="table table-responsive" id="transactions-table">
     <thead>
         <tr>
-            <th>User Id</th>
-        <th>Qrcode Owner Id</th>
-        <th>Qrcode Id</th>
+        <th>Buyer name</th>
+        <th>Qrcode Owner Name</th>
+        <th>Product Name</th>
         <th>Payment Method</th>
         <th>Message</th>
         <th>Amount</th>
@@ -14,9 +14,17 @@
     <tbody>
     @foreach($transactions as $transaction)
         <tr>
-            <td>{!! $transaction->user_id !!}</td>
-            <td>{!! $transaction->qrcode_owner_id !!}</td>
-            <td>{!! $transaction->qrcode_id !!}</td>
+            <td>
+            <a href=" {{ route('users.show',$transaction->user['id'] ) }}">
+            {!! $transaction->user['name'] !!}
+            </a>
+            </td>
+            <td>
+            <a href=" {{ route('users.show',$transaction->qrcode['user_id'] ) }}">
+            {!! $transaction->qrcode_owner['name'] !!}
+            </a>
+            </td>
+            <td>{!! $transaction->qrcode['product_name'] !!}</td>
             <td>{!! $transaction->payment_method !!}</td>
             <td>{!! $transaction->message !!}</td>
             <td>{!! $transaction->amount !!}</td>

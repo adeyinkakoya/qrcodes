@@ -1,24 +1,28 @@
 <table class="table table-responsive" id="users-table">
     <thead>
         <tr>
-            <th>Role Id</th>
+        
         <th>Name</th>
         <th>Email</th>
         <th>Email Verified At</th>
         <th>Password</th>
         <th>Remember Token</th>
+        <th>Role Id</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($users as $user)
         <tr>
-            <td>{!! $user->role_id !!}</td>
-            <td>{!! $user->name !!}</td>
+           
+            <td>
+            <a href="{{ route('users.show', $user->id)}}">{!! $user->name !!}</a>
+            </td>
             <td>{!! $user->email !!}</td>
             <td>{!! $user->email_verified_at !!}</td>
-            <td>{!! $user->password !!}</td>
+            <td>{!! $user->password !!}</td> 
             <td>{!! $user->remember_token !!}</td>
+             <td>{!! $user->role_id !!}</td>
             <td>
                 {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

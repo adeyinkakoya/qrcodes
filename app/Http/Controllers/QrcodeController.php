@@ -156,7 +156,7 @@ class QrcodeController extends AppBaseController
 
         Flash::success('Qrcode updated successfully.');
 
-        return redirect(route('qrcodes.index'));
+        return redirect(route('qrcodes.show',$qrcode->id));
     }
 
     /**

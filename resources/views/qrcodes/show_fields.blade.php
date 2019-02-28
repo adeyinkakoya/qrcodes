@@ -1,4 +1,5 @@
 <!-- Id Field -->
+<div class="col-md-6">
 <div class="form-group">
     {!! Form::label('id', 'Id:') !!}
     <p>{!! $qrcode->id !!}</p>
@@ -21,6 +22,15 @@
     {!! Form::label('company_name', 'Company Name:') !!}
     <p>{!! $qrcode->company_name !!}</p>
 </div>
+<!-- If the user id of the qrcode creator (if  webmaster/merchant is logged in ) is thesame as the logged in user i.e Im logging in OR if the role of the logged in user is either 1,2,3 i.e Admin, Moderarotor or webmaster
+@if($qrcode->user_id == Auth::user()->id || Auth::user()->role_id < 3 )
+
+
+
+
+@endif-->
+
+
 
 <!-- Product Name Field -->
 <div class="form-group">
@@ -46,11 +56,7 @@
     <p>{!! $qrcode->qrcode_path !!}</p>
 </div> -->
 
-<!-- Qrcode image -->
-<div class="form-group">
-{!! Form::label('qrcode_path', 'QRCode:') !!}
-    <p><img src="{{ asset($qrcode->qrcode_path) }}" size="400px"></p>
-</div>
+
 
 <!-- Amount Field -->
 <div class="form-group">
@@ -67,11 +73,22 @@
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $qrcode->created_at !!}</p>
+    <p>{!! $qrcode->created_at->format('D, M , Y') !!}</p>
 </div>
 
 <!-- Updated At Field -->
 <div class="form-group">
     {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $qrcode->updated_at !!}</p>
+    <p>{!! $qrcode->updated_at->format('D , M , Y') !!}</p>
+</div>
+</div>
+
+
+<div class=" col-md-6 pull-right">
+<!-- Qrcode image -->
+<div class="form-group">
+{!! Form::label('qrcode_path', 'QRCode:') !!}
+    <p><img src="{{ asset($qrcode->qrcode_path) }}" size="400px"></p>
+</div>
+
 </div>

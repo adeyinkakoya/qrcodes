@@ -66,5 +66,27 @@ class Transaction extends Model
         
     ];
 
-    
+// Transaction belongs to the Qrcode table. The foreign key belongs inside the Transactions table
+
+    public function qrcode()
+
+    {
+        return $this->belongsTo('App\Models\Qrcode','qrcode_id');// specify the foreign key
+    }
+
+    public function user()
+
+    {
+        return $this->belongsTo('App\Models\User','user_id');
+    }
+
+
+    public function qrcode_owner()
+
+    {
+        // What eloquent will be saying is that a User is connected to the transactions table but not using the user_id but the qrcode_owner_id, find that User. I think it works because the qrcodes table where the particular field is , is already joined to the transactions table.
+        return $this->belongsTo('App\Models\User','qrcode_owner_id');
+    }
+
+
 }

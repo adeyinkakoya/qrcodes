@@ -61,6 +61,12 @@ class User extends Model
     public static $rules = [
         
     ];
+    
+    public function transaction()
+
+    {
+        return $this->hasMany('App\Models\Transaction','user_id');
+    }
 
     
 }

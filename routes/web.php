@@ -17,6 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('contact/submit', function(){
+
+    return " This is using the url helper";
+});
+
+Route::get('/test', function(){
+
+    return view('test');
+});
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
