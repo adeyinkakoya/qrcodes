@@ -4,11 +4,15 @@
         
         <th>Name</th>
         <th>Email</th>
-        <th>Email Verified At</th>
-        <th>Password</th>
-        <th>Remember Token</th>
-        <th>Role Id</th>
+        <!-- <th>Email Verified At</th> -->
+        <!-- <th>Password</th> -->
+        <!-- <th>Remember Token</th> -->
+        
+
+        <th>User Role</th>
+        @if( Auth::user()->role_id < 3 )
             <th colspan="3">Action</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -19,10 +23,11 @@
             <a href="{{ route('users.show', $user->id)}}">{!! $user->name !!}</a>
             </td>
             <td>{!! $user->email !!}</td>
-            <td>{!! $user->email_verified_at !!}</td>
-            <td>{!! $user->password !!}</td> 
-            <td>{!! $user->remember_token !!}</td>
-             <td>{!! $user->role_id !!}</td>
+            <!-- <td>{!! $user->email_verified_at !!}</td> -->
+            <!-- <td>{!! $user->password !!}</td>  -->
+            <!-- <td>{!! $user->remember_token !!}</td> -->
+             <td>{!! $user->role['name'] !!}</td>
+             @if( Auth::user()->role_id < 3 )
             <td>
                 {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
@@ -32,6 +37,7 @@
                 </div>
                 {!! Form::close() !!}
             </td>
+            @endif
         </tr>
     @endforeach
     </tbody>

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Flash;
+use Response;
+use App\Models\Role;
+use Illuminate\Http\Request;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Repositories\UserRepository;
 use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
-use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 class UserController extends AppBaseController
 {
@@ -94,14 +96,15 @@ class UserController extends AppBaseController
     public function edit($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
-
+        // This is the controller returning the edit users page. We want to list the role names in the form select on that page and that is only available in the roles table. A relationship of the tables does not work here because the $users object only returns 1 row.
+        $roles = Role::all();
         if (empty($user)) {
             Flash::error('User not found');
 
             return redirect(route('users.index'));
         }
 
-        return view('users.edit')->with('user', $user);
+        return view('users.edit')->with('user', $user)->with('roles', $roles);
     }
 
     /**
@@ -114,6 +117,7 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
+        // This does not get the update request, this only searches the table users for the passed in ID and get that record which will then be update below with the update method. This only gets the particular user record.
         $user = $this->userRepository->findWithoutFail($id);
 
         if (empty($user)) {
@@ -122,7 +126,19 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
+        //$user->password; This is from the db and has already been hashed so you wont use this.
+        // Get all the new data from the from, this will have an unhashed password if the password was reset
+        $data = $request->all();// The $data is an array , not an object so use [];
+        // Only use the hash, if the password field is not empty, that means it was filled.
+        if(!empty($data['password'])){
+        
+        $data['password'] = Hash::make($data['password']);
+
+        };
+        
+        // This is the where the real update is taking place
+        //$user = $this->userRepository->update($request->all(), $id);
+        $user = $this->userRepository->update($data, $id);
 
         Flash::success('User updated successfully.');
 
