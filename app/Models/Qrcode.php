@@ -74,7 +74,7 @@ class Qrcode extends Model
 
     // Add a relationship with the Transactions table. 1 QR code has many transactions. Many people can buy that product using that QR code.
 
-    public function tansaction(){
+    public function transactions(){
 
 
         return $this->hasMany('App\Models\Transaction','qrcode_id');

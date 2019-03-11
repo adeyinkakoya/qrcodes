@@ -28,3 +28,4 @@
     <p>{!! $role->updated_at !!}</p>
 </div>
 
+@include('users.table')

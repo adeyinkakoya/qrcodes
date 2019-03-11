@@ -16,7 +16,22 @@
                     <p>{{ Auth::user()->name}}</p>
                 @endif
                 <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <i class="fa fa-circle text-success"></i>
+                @if(Auth::user()->role_id == 1)
+                Adminstrator
+
+                @elseif(Auth::user()->role_id == 2)
+                Moderator
+
+                @elseif(Auth::user()->role_id == 3)
+                Webmaster
+
+                @elseif(Auth::user()->role_id == 4)
+                Buyer
+
+
+                @endif
+              
             </div>
         </div>
 

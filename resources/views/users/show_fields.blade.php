@@ -49,12 +49,19 @@
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $user->created_at !!}</p>
+    <p>{!! $user->created_at->format('D,d,M,Y') !!}</p>
 </div>
 
 <!-- Updated At Field -->
 <div class="form-group">
     {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $user->updated_at !!}</p>
+    <p>{!! $user->updated_at->format('D,d,M,Y')  !!}</p>
 </div>
 
+@if( $user->id == Auth::user()->id || Auth::user()->role_id < 3 )
+<h3> Transactions</h3>
+@include('transactions.table')
+
+<h3> Qr codes </h3>
+@include('qrcodes.table')
+@endif

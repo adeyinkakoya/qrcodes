@@ -29,12 +29,38 @@ Route::get('/test', function(){
 
 Auth::routes();
 
+// All of these routes need authentication
 Route::group(['middleware' => 'auth'], function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('qrcodes', 'QrcodeController');
-Route::resource('users', 'UserController');
 Route::resource('transactions', 'TransactionController');
-Route::resource('roles', 'RoleController');
+
+// Admin, Moderator and Webmaster
+Route::group(['middleware' => 'checkwebmaster'], function() {
+  
+    Route::resource('qrcodes', 'QrcodeController');
+    
+    // Admin and Moderator
+    Route::group(['middleware' => 'checkmoderator'], function() {
+
+        Route::resource('users', 'UserController');
+
+        // Admin alone. Attached to a single route , no need for group. Its just 1 route
+        Route::resource('roles', 'RoleController')->middleware('checkadmin');
+
+    });
+    
+
+   
 
 });
+
+
+
+
+});
+
+
+Route::resource('accounts', 'AccountController');
+
+Route::resource('accountHistories', 'Account_historyController');

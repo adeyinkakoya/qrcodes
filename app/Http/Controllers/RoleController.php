@@ -73,6 +73,7 @@ class RoleController extends AppBaseController
      */
     public function show($id)
     {
+        // Get the row that has the ID passed in i.e 1,2,3 or 4
         $role = $this->roleRepository->findWithoutFail($id);
 
         if (empty($role)) {
@@ -81,7 +82,10 @@ class RoleController extends AppBaseController
             return redirect(route('roles.index'));
         }
 
-        return view('roles.show')->with('role', $role);
+        // Get all the users that have that have role_id. Role and User Models have been joined with the foreign key role_id
+        $users = $role->users;
+
+        return view('roles.show')->with('role', $role)->with('users', $users);
     }
 
     /**

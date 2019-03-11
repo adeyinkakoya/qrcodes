@@ -92,3 +92,9 @@
 </div>
 
 </div>
+
+
+<!-- We want to ensure that only the owner of this qrcode or the admin/moderator can only see this information. The qrcodes table has a user_id field to show its owner-->
+@if( $qrcode->user_id == Auth::user()->id || Auth::user()->role_id < 3 )
+@include('transactions.table')
+@endif
