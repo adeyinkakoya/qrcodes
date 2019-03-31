@@ -3,7 +3,12 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Account
+            Account : {!! $account->id !!}
+            <small>
+            @if($account->applied_for_payout ==1)
+            Payment processing and pending
+            @endif
+            </small>
         </h1>
     </section>
     <div class="content">

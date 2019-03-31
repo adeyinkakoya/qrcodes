@@ -1,9 +1,5 @@
-<!-- User Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
-</div>
 
+@if(Auth::user()->role_id == 1)
 <!-- Balance Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('balance', 'Balance:') !!}
@@ -21,6 +17,14 @@
     {!! Form::label('total_debit', 'Total Debit:') !!}
     {!! Form::number('total_debit', null, ['class' => 'form-control']) !!}
 </div>
+
+<!-- Paid Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('paid', 'Paid:') !!}
+    {!! Form::number('paid', null, ['class' => 'form-control']) !!}
+</div>
+
+@endif
 
 <!-- Withdrawal Method Field -->
 <div class="form-group col-sm-6">
@@ -52,6 +56,12 @@
     {!! Form::text('bank_account', null, ['class' => 'form-control']) !!}
 </div>
 
+
+
+
+
+
+
 <!-- Country Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('country', 'Country:') !!}
@@ -67,5 +77,4 @@
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('accounts.index') !!}" class="btn btn-default">Cancel</a>
 </div>

@@ -11,7 +11,7 @@
     @foreach($accountHistories as $accountHistory)
         <tr>
             <td>{!! $accountHistory->account_id !!}</td>
-            <td>{!! $accountHistory->user_id !!}</td>
+            <td>{!! $accountHistory->user['email']!!}</td>
             <td>{!! $accountHistory->message !!}</td>
             <td>
                 {!! Form::open(['route' => ['accountHistories.destroy', $accountHistory->id], 'method' => 'delete']) !!}

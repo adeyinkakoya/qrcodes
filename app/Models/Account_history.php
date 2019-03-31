@@ -54,5 +54,15 @@ class Account_history extends Model
         
     ];
 
+    public function account()
+    {
+        return $this->belongsTo('App\Models\Account', 'account_id');
+    }
     
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
 }

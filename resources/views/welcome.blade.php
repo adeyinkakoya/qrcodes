@@ -82,6 +82,8 @@
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
+                    {{Config::set('app.locale','FR')}}
+                    {{ Config::get('app.locale') }}
                 </div>
 
                 <div class="links">

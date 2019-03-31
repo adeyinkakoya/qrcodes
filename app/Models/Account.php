@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Account
  * @package App\Models
- * @version March 11, 2019, 7:36 pm UTC
+ * @version March 24, 2019, 11:50 pm UTC
  *
  * @property integer user_id
  * @property float balance
@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string bank_name
  * @property string bank_branch
  * @property string bank_account
+ * @property integer applied_for_payout
+ * @property integer paid
+ * @property date last_date_applied
+ * @property date last_date_paid
  * @property string country
  * @property string other_details
  */
@@ -45,6 +49,10 @@ class Account extends Model
         'bank_name',
         'bank_branch',
         'bank_account',
+        'applied_for_payout',
+        'paid',
+        'last_date_applied',
+        'last_date_paid',
         'country',
         'other_details'
     ];
@@ -65,6 +73,10 @@ class Account extends Model
         'bank_name' => 'string',
         'bank_branch' => 'string',
         'bank_account' => 'string',
+        'applied_for_payout' => 'integer',
+        'paid' => 'integer',
+        'last_date_applied' => 'date',
+        'last_date_paid' => 'date',
         'country' => 'string',
         'other_details' => 'string'
     ];
@@ -78,5 +90,19 @@ class Account extends Model
         
     ];
 
+    // Set the relationship between User and the Child Account
+
+    
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+    
+    // Set the relationship between Account and the Child Account_history
+
+    public function account_histories()
+    {
+        return $this->hasMany('App\Models\Account_history', 'account_id');
+    }
     
 }

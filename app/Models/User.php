@@ -80,7 +80,18 @@ class User extends Model
      // Set the relationship with the roles table with role_id but this time Role is the parent cos the foreign key is in the users table
     public function role()
     {
-        return $this->belongsTo('App\Models\role', 'role_id');
+        return $this->belongsTo('App\Models\Role', 'role_id');
+    }
+
+    public function account()
+    {
+        //hasOne is different from hasMany(). A user will only have one account in the accounts table.
+        return $this->hasOne('App\Models\Account', 'user_id');
     }
     
+
+    public function account_history()
+    {
+        return $this->hasMany('App\Models\Account_history', 'user_id');
+    }
 }

@@ -17,6 +17,7 @@ class CheckModerator
      */
     public function handle($request, Closure $next)
     {
+        // Checks if user is an admin or a moderator for authorization.
         if(Auth::user()->role_id > 2 ){
 
            throw new HttpException(404);

@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Support\Facades\Storage;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,13 +26,17 @@ Route::get('/test', function(){
 
 Auth::routes();
 
-// All of these routes need authentication
+// All of these routes need only authentication. General routes
 Route::group(['middleware' => 'auth'], function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('transactions', 'TransactionController');
 
-// Admin, Moderator and Webmaster
+Route::resource('accounts', 'AccountController');
+
+Route::resource('accountHistories', 'Account_historyController');
+
+// The following routes needs Authorization. Admin and Moderators and Webmasters
 Route::group(['middleware' => 'checkwebmaster'], function() {
   
     Route::resource('qrcodes', 'QrcodeController');
@@ -51,16 +52,7 @@ Route::group(['middleware' => 'checkwebmaster'], function() {
     });
     
 
-   
-
 });
 
 
-
-
 });
-
-
-Route::resource('accounts', 'AccountController');
-
-Route::resource('accountHistories', 'Account_historyController');
