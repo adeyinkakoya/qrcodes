@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Flash;
 use Response;
+//use LaravelQRCode\Facades\QRCode; Youre not using this package anylonger
 use Illuminate\Http\Request;
-//use LaravelQRCode\Facades\QRCode;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Qrcode as QrcodeModel;
+use App\Models\Qrcode as QrcodeModel; // We change the Model name because it was clashing with the Qrcode creator package. Use QrcodeModel not Qrcode
 use App\Repositories\QrcodeRepository;
 use App\Http\Requests\CreateQrcodeRequest;
 use App\Http\Requests\UpdateQrcodeRequest;
 use App\Http\Controllers\AppBaseController;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use SimpleSoftwareIO\QrCode\Facades\QrCode; // New Qrcode creator package in use.
 use Prettus\Repository\Criteria\RequestCriteria;
 
 class QrcodeController extends AppBaseController
@@ -34,9 +34,15 @@ class QrcodeController extends AppBaseController
      */
     public function index(Request $request)
     {
+        // Ensure users only see their qrcodes and admin sees all Qrcodes. i.e If the logged in users role is admin or moderator , send all data else..
+        if( Auth::user()->role_id < 3 ) {
         $this->qrcodeRepository->pushCriteria(new RequestCriteria($request));
         $qrcodes = $this->qrcodeRepository->all();
+        } else {
 
+            $qrcodes = QrcodeModel::where('user_id',Auth::user()->id)->get();
+
+        }
         return view('qrcodes.index')
             ->with('qrcodes', $qrcodes);
     }

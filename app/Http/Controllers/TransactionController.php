@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Flash;
+use Response;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AppBaseController;
+use App\Repositories\TransactionRepository;
 use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
-use App\Repositories\TransactionRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
-use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 class TransactionController extends AppBaseController
 {
@@ -29,9 +31,19 @@ class TransactionController extends AppBaseController
      */
     public function index(Request $request)
     {
+
+        // Ensure users only get to see their transactions while admin sees all Transactions
+        if(Auth::user()->role_id < 3){
+
         $this->transactionRepository->pushCriteria(new RequestCriteria($request));
         $transactions = $this->transactionRepository->all();
 
+        } 
+        else {
+
+            $transactions = Transaction::where('user_id',Auth::user()->id)->get();
+
+        }
         return view('transactions.index')
             ->with('transactions', $transactions);
     }

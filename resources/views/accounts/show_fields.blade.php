@@ -4,6 +4,7 @@
 <div class="form-group">
     {!! Form::label('user_id', 'User:') !!}
     <p>{!! $account->user['name']!!} | {!! $account->user['email']!!}</p>
+    
 </div>
 
 <!-- Balance Field -->
@@ -61,22 +62,27 @@
     <p>{!! $account->bank_account !!}</p>
 </div>
 
-<!-- Paid Field -->
-<div class="form-group">
-    {!! Form::label('paid', 'Paid:') !!}
-    <p>{!! $account->paid !!}</p>
-</div>
-
 <!-- Last Date Applied Field -->
 <div class="form-group">
     {!! Form::label('last_date_applied', 'Last Date Applied:') !!}
-    <p>{!! $account->last_date_applied !!}</p>
+    <p> @if(is_null($account->last_date_applied))
+        No payout application.
+        @else
+        {!! $account->last_date_applied->format('D - d - M - Y') !!}
+        @endif
+    
+    
+    </p>
 </div>
 
 <!-- Last Date Paid Field -->
 <div class="form-group">
     {!! Form::label('last_date_paid', 'Last Date Paid:') !!}
-    <p>{!! $account->last_date_paid !!}</p>
+    <p>@if(is_null($account->last_date_paid))
+        No payment received.
+        @else
+        {!! $account->last_date_paid->format('Y - m - d') !!}
+        @endif</p>
 </div>
 
 <!-- Country Field -->
